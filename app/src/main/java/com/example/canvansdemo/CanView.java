@@ -12,6 +12,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.Attributes;
 
@@ -85,7 +86,6 @@ public class CanView extends View {
         super(context, attrs);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CanView);
-        num_of_group_x = ta.getInteger(R.styleable.CanView_num_of_group_x, 3);
         num_of_y_axis_text = ta.getInteger(R.styleable.CanView_num_of_group_y, 10) + 1;
         unit_of_y_axis = ta.getString(R.styleable.CanView_unit_of_y_axis);
         size_of_each_grid_y = ta.getInteger(R.styleable.CanView_size_of_each_grid_y, 2);
@@ -106,12 +106,32 @@ public class CanView extends View {
         initPaint();
 
         date_text_rect = new Rect();
+
+        initData();
+    }
+
+    private void initData() {
+        sleep_time_list = new ArrayList<>();
+        sleep_time_list.add(1);
+        sleep_time_list.add(2);
+        sleep_time_list.add(3);
+        fall_in_sleep_time_list = new ArrayList<>();
+        fall_in_sleep_time_list.add(5);
+        fall_in_sleep_time_list.add(10);
+        fall_in_sleep_time_list.add(15);
     }
 
 
     public void loadData(List<Integer> fall_in_sleep_time_list, List<Integer> sleep_time_list) {
+
+        // set num of x axis
+        num_of_group_x = fall_in_sleep_time_list.size() > sleep_time_list.size() ? fall_in_sleep_time_list.size() : sleep_time_list.size();
+
+        this.fall_in_sleep_time_list.clear();
+        this.sleep_time_list.clear();
         this.fall_in_sleep_time_list = fall_in_sleep_time_list;
         this.sleep_time_list = sleep_time_list;
+
         // render again
         this.invalidate();
     }
@@ -135,7 +155,7 @@ public class CanView extends View {
         // fall_in_sleep_time_cylinder_paint
         fall_in_sleep_time_cylinder_paint = new Paint();
         fall_in_sleep_time_cylinder_paint.setAntiAlias(true);
-        fall_in_sleep_time_cylinder_paint.setColor(color_of_fall_in_sleep_time_cylinder == 0 ? Color.parseColor("#37CAEC") : color_of_fall_in_sleep_time_cylinder);
+        fall_in_sleep_time_cylinder_paint.setColor(color_of_fall_in_sleep_time_cylinder == 0 ? Color.parseColor("#2A93D5") : color_of_fall_in_sleep_time_cylinder);
         fall_in_sleep_time_cylinder_paint.setStrokeWidth(1);
         fall_in_sleep_time_cylinder_paint.setStyle(Paint.Style.FILL);
 
@@ -143,7 +163,7 @@ public class CanView extends View {
         // sleep_time_cylinder_paint
         sleep_time_cylinder_paint = new Paint();
         sleep_time_cylinder_paint.setAntiAlias(true);
-        sleep_time_cylinder_paint.setColor(color_of_sleep_time_cylinder == 0 ? Color.parseColor("#2A93D5") : color_of_sleep_time_cylinder);
+        sleep_time_cylinder_paint.setColor(color_of_sleep_time_cylinder == 0 ? Color.parseColor("#37CAEC") : color_of_sleep_time_cylinder);
         sleep_time_cylinder_paint.setStrokeWidth(1);
         sleep_time_cylinder_paint.setStyle(Paint.Style.FILL);
 
@@ -205,14 +225,20 @@ public class CanView extends View {
             // fall in sleep time cylinder
             int fall_in_sleep_time_start_x = i * group_width + 2 * min_unit + axis_cross_x;
             // calculate hight of fall in sleep time data
-            float hight_of_tall_in_sleep_time_date = ((float) fall_in_sleep_time_list.get(i)) / size_of_each_grid_y;
-            canvas.drawRect(fall_in_sleep_time_start_x, axis_cross_y - (axis_stroke_width >> 1), (int) (fall_in_sleep_time_start_x + cylinder_with),  (axis_cross_y - (axis_stroke_width >> 1) - y_min_unit * hight_of_tall_in_sleep_time_date), fall_in_sleep_time_cylinder_paint);
+            float hight_of_tall_in_sleep_time_date = 0;
+            if (i < fall_in_sleep_time_list.size()) {
+                hight_of_tall_in_sleep_time_date = ((float) fall_in_sleep_time_list.get(i)) / size_of_each_grid_y;
+            }
+            canvas.drawRect(fall_in_sleep_time_start_x, axis_cross_y - (axis_stroke_width >> 1), (int) (fall_in_sleep_time_start_x + cylinder_with), (axis_cross_y - (axis_stroke_width >> 1) - y_min_unit * hight_of_tall_in_sleep_time_date), fall_in_sleep_time_cylinder_paint);
 
 
             // sleep time cylinder
             int sleep_time_start_x = i * group_width + min_unit + axis_cross_x;
             // calculate hight of sleep time data
-            float sleep_time_date = ((float) sleep_time_list.get(i)) / size_of_each_grid_y;
+            float sleep_time_date = 0;
+            if (i < sleep_time_list.size()) {
+                sleep_time_date = ((float) sleep_time_list.get(i)) / size_of_each_grid_y;
+            }
             canvas.drawRect(sleep_time_start_x, axis_cross_y - (axis_stroke_width >> 1), (int) (sleep_time_start_x + cylinder_with), axis_cross_y - (axis_stroke_width >> 1) - y_min_unit * sleep_time_date, sleep_time_cylinder_paint);
 
 

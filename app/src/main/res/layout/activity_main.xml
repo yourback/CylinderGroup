@@ -11,10 +11,9 @@
     <com.example.canvansdemo.CanView
         android:id="@+id/cv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:padding="20dp"
-        app:num_of_group_x="3"
         app:num_of_group_y="10"
         app:ratio="1"
         app:size_of_each_grid_y="2"

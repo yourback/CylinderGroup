@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         fall_in_sleep_data_list.add(10);
         fall_in_sleep_data_list.add(20);
         fall_in_sleep_data_list.add(15);
+        fall_in_sleep_data_list.add(15);
         sleep_data_list.add(13);
         sleep_data_list.add(5);
         sleep_data_list.add(0);
