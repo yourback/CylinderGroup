@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    android:padding="20sp"
+    tools:context=".MainActivity">
+
+    <com.example.canvansdemo.CanView
+        android:id="@+id/cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="20dp"
+        app:num_of_group_x="3"
+        app:num_of_group_y="10"
+        app:ratio="1"
+        app:size_of_each_grid_y="2"
+        app:textsize_of_axis_text="10"
+        app:unit_of_y_axis="h" />
+
+
+</RelativeLayout>
