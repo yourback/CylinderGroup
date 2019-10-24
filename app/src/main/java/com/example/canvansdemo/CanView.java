@@ -13,6 +13,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import java.util.List;
+import java.util.jar.Attributes;
 
 public class CanView extends View {
     // number of group
@@ -68,8 +69,8 @@ public class CanView extends View {
     Rect date_text_rect;
 
     // two list-data
-    private List<Float> sleep_time_list;
-    private List<Float> fall_in_sleep_time_list;
+    private List<Integer> sleep_time_list;
+    private List<Integer> fall_in_sleep_time_list;
 
     // axis line color
     private int color_of_axis_line;
@@ -108,7 +109,7 @@ public class CanView extends View {
     }
 
 
-    public void loadData(List<Float> fall_in_sleep_time_list, List<Float> sleep_time_list) {
+    public void loadData(List<Integer> fall_in_sleep_time_list, List<Integer> sleep_time_list) {
         this.fall_in_sleep_time_list = fall_in_sleep_time_list;
         this.sleep_time_list = sleep_time_list;
         // render again
@@ -203,13 +204,16 @@ public class CanView extends View {
             // paint one group rect
             // fall in sleep time cylinder
             int fall_in_sleep_time_start_x = i * group_width + 2 * min_unit + axis_cross_x;
-
-            canvas.drawRect(fall_in_sleep_time_start_x, axis_cross_y - (axis_stroke_width >> 1), (int) (fall_in_sleep_time_start_x + cylinder_with), (float) (axis_cross_y - (axis_stroke_width >> 1) - y_min_unit * 1.3), fall_in_sleep_time_cylinder_paint);
+            // calculate hight of fall in sleep time data
+            float hight_of_tall_in_sleep_time_date = ((float) fall_in_sleep_time_list.get(i)) / size_of_each_grid_y;
+            canvas.drawRect(fall_in_sleep_time_start_x, axis_cross_y - (axis_stroke_width >> 1), (int) (fall_in_sleep_time_start_x + cylinder_with),  (axis_cross_y - (axis_stroke_width >> 1) - y_min_unit * hight_of_tall_in_sleep_time_date), fall_in_sleep_time_cylinder_paint);
 
 
             // sleep time cylinder
             int sleep_time_start_x = i * group_width + min_unit + axis_cross_x;
-            canvas.drawRect(sleep_time_start_x, axis_cross_y - (axis_stroke_width >> 1), (int) (sleep_time_start_x + cylinder_with), axis_cross_y - (axis_stroke_width >> 1) - y_min_unit, sleep_time_cylinder_paint);
+            // calculate hight of sleep time data
+            float sleep_time_date = ((float) sleep_time_list.get(i)) / size_of_each_grid_y;
+            canvas.drawRect(sleep_time_start_x, axis_cross_y - (axis_stroke_width >> 1), (int) (sleep_time_start_x + cylinder_with), axis_cross_y - (axis_stroke_width >> 1) - y_min_unit * sleep_time_date, sleep_time_cylinder_paint);
 
 
             int sleep_time_axis_text_start_x = i * group_width + group_width / 2 + axis_cross_x;
@@ -341,16 +345,16 @@ public class CanView extends View {
         int specSize = MeasureSpec.getSize(measureSpec);
 
         //wrap_content
-
-        if (specMode == MeasureSpec.AT_MOST) {
-
-        }
+//
+//        if (specMode == MeasureSpec.AT_MOST) {
+//
+//        }
 
         //fill_parent或者精确值
 
-        else if (specMode == MeasureSpec.EXACTLY) {
-
-        }
+//        else if (specMode == MeasureSpec.EXACTLY) {
+//
+//        }
 
 //        Log.i("这个控件的宽度----------", "specMode=" + specMode + " specSize=" + specSize);
 
@@ -366,12 +370,12 @@ public class CanView extends View {
 
         int specSize = MeasureSpec.getSize(measureSpec);
 
-        //wrap_content
-        if (specMode == MeasureSpec.AT_MOST) {
-        }
-        //fill_parent或者精确值
-        else if (specMode == MeasureSpec.EXACTLY) {
-        }
+//        //wrap_content
+//        if (specMode == MeasureSpec.AT_MOST) {
+//        }
+//        //fill_parent或者精确值
+//        else if (specMode == MeasureSpec.EXACTLY) {
+//        }
         specSize = width / ratio;
 //        Log.i("这个控件的高度----------", "specMode:" + specMode + " specSize:" + specSize);
         return specSize;

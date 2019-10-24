@@ -23,29 +23,17 @@ public class MainActivity extends AppCompatActivity {
         cv = findViewById(R.id.cv);
 
 
-        ArrayList<Float> fall_in_sleep_data_list = new ArrayList<Float>();
-        ArrayList<Float> sleep_data_list = new ArrayList<Float>();
+        ArrayList<Integer> fall_in_sleep_data_list = new ArrayList<>();
+        ArrayList<Integer> sleep_data_list = new ArrayList<>();
 
-        fall_in_sleep_data_list.add(1.0f);
-        fall_in_sleep_data_list.add(5.0f);
-        fall_in_sleep_data_list.add(4.4f);
-        sleep_data_list.add(3.3f);
-        sleep_data_list.add(4.4f);
-        sleep_data_list.add(5.5f);
+        fall_in_sleep_data_list.add(10);
+        fall_in_sleep_data_list.add(20);
+        fall_in_sleep_data_list.add(15);
+        sleep_data_list.add(13);
+        sleep_data_list.add(5);
+        sleep_data_list.add(0);
 
-
-        for (Object o : fall_in_sleep_data_list){
-            Log.e(TAG, "fall_in_sleep_data_list: "+o.toString());
-        }
-
-
-        for (Object o : sleep_data_list){
-            Log.e(TAG, "sleep_data_list: "+o.toString());
-        }
-
-
-
-//        cv.loadData();
+        cv.loadData(fall_in_sleep_data_list, sleep_data_list);
 
 
     }
